@@ -1,8 +1,8 @@
 import axios from 'axios';
 import './App.css';
 function App() {
-  function findSpouse() {
-    axios.get('https://ddragon.leagueoflegends.com/cdn/12.6.1/data/ko_KR/champion.json')
+  async function findSpouse() {
+  await axios.get('https://ddragon.leagueoflegends.com/cdn/12.6.1/data/ko_KR/champion.json')
   .then(response => {
     console.log(response.data);
   })

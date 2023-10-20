@@ -26,11 +26,19 @@ export function useSetmarriedPartner() {
   return useSetRecoilState(marriedPartnerStatus);
 }
 // 현재 파트너의 정보
-export const userPatnerValue = atom<ChampionData | null | unknown>({
+export const userPatnerValue = atom<ChampionData | null | unknown | any>({
   key: 'userPatnerValue',
   default: null,
 });
-
+// 파트너 이미지
+export const partnerImgValue = atom<ChampionData | null |unknown>({
+  key : 'marriedPartnerValue',
+  default : null
+})
+// 이미지 정보 업데이트
+export function useSetPartnerImg() {
+  return useSetRecoilState(partnerImgValue);
+}
 // 파트너 정보 상태 갱신 함수
 export function useSetPartnerState() {
   return useSetRecoilState(userPatnerValue);

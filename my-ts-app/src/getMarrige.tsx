@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { maritalStatus, useSetMarriage, useSetPartnerState, userPatnerValue } from "./recoil/champion";
+import { maritalStatus, partnerImgValue, useSetMarriage, useSetPartnerImg, useSetPartnerState, userPatnerValue } from "./recoil/champion";
 
 interface ChampionData {
   version: string;
@@ -20,7 +20,10 @@ const GetMarrige = (): JSX.Element => {
   const setPartnerState = useSetPartnerState();
   // 파트너 정보
   const partnerData: ChampionData | any = useRecoilValue(userPatnerValue);
-
+  // 파트너 이미지
+  const partnerImg : ChampionData | any = useRecoilValue(partnerImgValue);
+  // 파트너 이미지 갱신 함수
+  const setPartnerImg = useSetPartnerImg();
   function getRandomChampion(championData: any) {
     const championsArray = Object.values(championData.data); // 챔피언 데이터 배열로 변환
     const randomChampion = championsArray[Math.floor(Math.random() * championsArray.length)];
@@ -35,7 +38,10 @@ const GetMarrige = (): JSX.Element => {
   function test() {
     try {axios.get('https://ddragon.leagueoflegends.com/cdn/12.6.1/img/champion/Aatrox.png')
   .then(response => {
-    console.log(response.data);
+    // 파트너 이미지 새로 할당
+    setPartnerImg(response.data);
+    // atom 확인
+    console.log(partnerImg);
   })}
     catch (error) {
       console.log('이미지 가져오기 실패', error);
@@ -49,7 +55,7 @@ const GetMarrige = (): JSX.Element => {
     setPartnerState(null);
     try {
       axios
-        .get('https://ddragon.leagueoflegends.com/cdn/12.6.1/data/ko_KR/champion.json')
+        .get('https://ddragon.leagueoflegends.com/cdn/12.6.1/data/ko_KR/champion.json', {responseType: 'text'})
         .then((response) => {
           const partnerData = response.data; // API에서 받아온 챔피언 데이터
 
@@ -77,7 +83,7 @@ const GetMarrige = (): JSX.Element => {
 
           // Recoil Atom 업데이트
           setPartnerState(randomChampion);
-
+          test()
           console.log('이 상대는 어떠신가요?', randomChampion);
         });
     } catch (error) {
@@ -107,6 +113,7 @@ const GetMarrige = (): JSX.Element => {
       <h4>{partnerData.title}</h4>
       <h2>{partnerData.name}</h2>
       <p>{partnerData.blurb}</p>
+      <img src={partnerImg} alt="파트너 이미지" />
       <button onClick={marryMe}>결혼해주세요</button>
       <button onClick={cancelDate}>당신은 내 스타일이 아녜요</button>
     </div>

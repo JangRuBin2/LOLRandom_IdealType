@@ -31,7 +31,16 @@ const GetMarrige = (): JSX.Element => {
   function marryMe() {
     setMarriage(true);
   }
-  
+  // 챔피언 이미지 찾기 함수
+  function test() {
+    try {axios.get('https://ddragon.leagueoflegends.com/cdn/12.6.1/img/champion/Aatrox.png')
+  .then(response => {
+    console.log(response.data);
+  })}
+    catch (error) {
+      console.log('이미지 가져오기 실패', error);
+    }
+  }
   // 빠꾸 함수
   function cancelDate() {
     // 여기에 빠꾸하는 로직을 추가
@@ -45,11 +54,9 @@ const GetMarrige = (): JSX.Element => {
           const partnerData = response.data; // API에서 받아온 챔피언 데이터
 
           // 랜덤 챔피언 선택
-          const randomChampion = getRandomChampion(partnerData);
-
+          const randomChampion : any = getRandomChampion(partnerData);
           // Recoil Atom 업데이트
           setPartnerState(randomChampion);
-
           console.log('이 상대는 어떠신가요?', randomChampion);
         });
     } catch (error) {
@@ -84,6 +91,7 @@ const GetMarrige = (): JSX.Element => {
   if (isMarried) {
     return (<><p>{partnerData.name}와의 결혼을 축하합니다!</p>
     <button onClick={divorce}>파혼</button>
+    <button onClick={test}>테스트</button>
     </>)
   }
   if (!partnerData) {

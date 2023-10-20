@@ -32,7 +32,7 @@ export const userPatnerValue = atom<ChampionData | null | unknown | any>({
 });
 // 파트너 이미지
 export const partnerImgValue = atom<ChampionData | null |unknown>({
-  key : 'marriedPartnerValue',
+  key : 'partnerImgValue',
   default : null
 })
 // 이미지 정보 업데이트

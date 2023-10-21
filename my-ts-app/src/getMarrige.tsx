@@ -39,14 +39,17 @@ const GetMarrige = (): JSX.Element => {
     setMarriage(true);
   }
   // 챔피언 이미지 찾기 함수
-  async function getPartnerImg(name : any) {
+  async function getPartnerImg(name : string) {
     try {
-      await axios.get(`https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${name}_3.jpg`, { responseType: "arraybuffer" })
+      console.log('인자가 잘 들어오는지 확인',name);
+      await axios.get(`https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${name}_0.jpg`, { responseType: "blob" })
   .then(response => {
-    const data : any = Buffer.from(response.data, 'binary').toString("base64");
-
-    // 파트너 이미지 새로 할당
-    setPartnerImg(data);
+    const reader = new FileReader();
+    reader.readAsDataURL(response.data);
+    reader.onload = () => {
+      // 이미지 데이터를 Base64로 변환하여 저장
+      setPartnerImg(reader.result);
+    };
     // atom 확인
     console.log(userPartnerImg);
   })}
@@ -83,7 +86,7 @@ const GetMarrige = (): JSX.Element => {
           console.log('이 상대는 어떠신가요?', randomChampion);
           // 챔피언 이미지 데이터 받아오는 함수
           getPartnerImg(userPartnerData.id);
-          console.log(userPartnerData.id);
+          console.log(typeof(userPartnerData.id));
         });
     } catch (error) {
       console.log('결혼 상대 매칭 실패', error);

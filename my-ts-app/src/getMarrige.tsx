@@ -95,17 +95,25 @@ const GetMarrige = (): JSX.Element => {
   }
   return (
     <div>
-      {userPartnerData ? (<><h4>{userPartnerData.title}</h4>
+      {userPartnerData ? (<>
+      <div style={{display : "flex", flexDirection : "row", justifyContent : "center"}}>
+      <h4>{userPartnerData.title}</h4>
       <h2>{userPartnerData.name}</h2>
-      <p>{userPartnerData.blurb}</p> 
+      </div>
+      <div style={{display : "flex", flexDirection : "column", justifyContent : "center", alignItems : "center"}}>
         <img
           src={userPartnerImg}
           alt="파트너 이미지"
           width="300"
           height="400"
-        /></>) : (<p>정보 불러오는중...</p>)}
-      <button onClick={marryMe}>결혼해주세요</button>
+        />
+        <p>{userPartnerData.blurb}</p>
+        </div>
+        </>) : (<p>정보 불러오는중...</p>)}
+        <div style={{border : '1px, solid, black'}}>
+      <button onClick={marryMe}>결혼</button>
       <button onClick={cancelDate}>다른 파트너 찾기</button>
+        </div>
     </div>
   );
 };

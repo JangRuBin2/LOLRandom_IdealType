@@ -4,7 +4,7 @@
   padding: 0;
 }
 body {
-  background-color: #A8E7F5;
+  background-color: var(--background-color);
   width: 100vw;
   height: 100vh;
 }
@@ -14,6 +14,18 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+:root {
+  /* 프라이머리 컬러 */
+  --primary-color: #2CC5E8
+  /* 세컨더리 컬러 */
+  --secondary-color: #A8E7F5;
+  /* 악센트 컬러 */
+  --accent-color : #159EBC;
+  /* 백그라운드 컬러 */
+  --background-color : #D6F4FA;
+  /* 텍스트 컬러 */
+  --text-color: #041F25
 }
 .main_container {
   

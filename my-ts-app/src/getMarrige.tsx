@@ -45,7 +45,6 @@ const GetMarrige = (): JSX.Element => {
   // 다른 파트너 찾는 함수
   function cancelDate() {
     // 여기에 빠꾸하는 로직을 추가
-    console.log("Atom에 저장된 파트너 데이터:", userPartnerData);
     try {
       // 현재 파트너 정보 초기화
       setPartnerState(null);

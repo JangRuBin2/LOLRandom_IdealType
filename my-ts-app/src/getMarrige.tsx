@@ -50,7 +50,16 @@ const GetMarrige = (): JSX.Element => {
       // 현재 파트너 정보 초기화
       setPartnerState(null);
       // 다시 챔피언 정보 받아옴
-      findPartner();
+      const localData : any = localStorage.getItem('test');
+      const parsedData = JSON.parse(localData);
+      console.log('로컬 데이터',parsedData);
+      const randomChampionData : ChampionData | any = getRandomChampion(parsedData.data);
+      // 파트너 데이터 업데이트
+      setPartnerState(randomChampionData);
+      // 챔피언 id로 이미지 데이터 받아오는 함수 실행
+      if (randomChampionData) {
+        getPartnerImg(randomChampionData.id);
+      }
     } catch (error) {
       console.log('결혼 상대 매칭 실패', error);
     }
@@ -60,10 +69,12 @@ const GetMarrige = (): JSX.Element => {
   async function findPartner() {
     try {
       const response = await axios.get('https://ddragon.leagueoflegends.com/cdn/12.6.1/data/ko_KR/champion.json');
+      // 로컬에 저장
+      localStorage.setItem('test', JSON.stringify(response));
       // API에서 받아온 챔피언 데이터
-      const partnerData = response.data;
+      const allChampionData = response.data;
       // 랜덤 챔피언 선택
-      const randomChampionData : ChampionData | any = getRandomChampion(partnerData);
+      const randomChampionData : ChampionData | any = getRandomChampion(allChampionData);
       // 파트너 데이터 업데이트
       setPartnerState(randomChampionData);
       // 챔피언 id로 이미지 데이터 받아오는 함수 실행

@@ -49,10 +49,11 @@ const GetMarrige = (): JSX.Element => {
     try {
       // 현재 파트너 정보 초기화
       setPartnerState(null);
-      // 다시 챔피언 정보 받아옴
-      const localData : any = localStorage.getItem('test');
-      const parsedData = JSON.parse(localData);
-      console.log('로컬 데이터',parsedData);
+      // 로컬에서 모든 챔피언 데이터 가져옴
+      const allChampionData : any = localStorage.getItem('allChampData');
+      // 파싱
+      const parsedData = JSON.parse(allChampionData);
+      // 랜덤 챔피언 데이터 추출
       const randomChampionData : ChampionData | any = getRandomChampion(parsedData.data);
       // 파트너 데이터 업데이트
       setPartnerState(randomChampionData);
@@ -70,7 +71,7 @@ const GetMarrige = (): JSX.Element => {
     try {
       const response = await axios.get('https://ddragon.leagueoflegends.com/cdn/12.6.1/data/ko_KR/champion.json');
       // 로컬에 저장
-      localStorage.setItem('test', JSON.stringify(response));
+      localStorage.setItem('allChampData', JSON.stringify(response));
       // API에서 받아온 챔피언 데이터
       const allChampionData = response.data;
       // 랜덤 챔피언 선택

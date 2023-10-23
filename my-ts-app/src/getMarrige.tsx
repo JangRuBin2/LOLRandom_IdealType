@@ -110,7 +110,7 @@ const GetMarrige = (): JSX.Element => {
         <p>{userPartnerData.blurb}</p>
         </div>
         </>) : (<p>정보 불러오는중...</p>)}
-        <div style={{border : '1px, solid, black'}}>
+        <div style={{}}>
       <button onClick={marryMe}>결혼</button>
       <button onClick={cancelDate}>다른 파트너 찾기</button>
         </div>

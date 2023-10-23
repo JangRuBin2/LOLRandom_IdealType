@@ -17,19 +17,30 @@ body {
 }
 :root {
   /* 프라이머리 컬러 */
-  --primary-color: #2CC5E8
-  /* 세컨더리 컬러 */
   --secondary-color: #A8E7F5;
   /* 악센트 컬러 */
   --accent-color : #159EBC;
   /* 백그라운드 컬러 */
   --background-color : #D6F4FA;
   /* 텍스트 컬러 */
-  --text-color: #041F25
+  --text-color: #041F25;
+  /* 옅은 회색 */
+  --normal-gray : #D9D9D9;
 }
 .main_container {
-  
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
 }
-.main_box {
-  border: 1px solid black;
+.content_box {
+  width: 300px;
+  height: 100px;
+  background-color: var(--normal-gray);
+}
+.btn_box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
 }

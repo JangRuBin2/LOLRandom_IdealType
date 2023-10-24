@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Link } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from "recoil";
 import { ChampionData, maritalStatus, partnerImgValue, useSetMarriage, useSetPartnerImg, useSetPartnerState, userPatnerValue } from "./recoil/champion";
 
@@ -93,7 +94,12 @@ const GetMarrige = (): JSX.Element => {
   // 결혼 상태일 때 태그
   if (isMarried) {
     return (<><p>{userPartnerData.name}와의 결혼을 축하합니다!</p>
+    <div className="btn_box">
     <button onClick={divorce}>파혼</button>
+    <Link to='/test'>
+    <button>테스트</button>
+    </Link>
+    </div>
     </>)
   }
   // 파트너 데이터가 없는 최초 접속시 태그

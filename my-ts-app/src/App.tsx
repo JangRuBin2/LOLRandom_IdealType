@@ -1,6 +1,9 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
+import ExList from './exList';
 import GetMarrige from './getMarrige';
+import MainPage from './mainPage';
+import WorldCup from './worldCup';
 function App() {
   return (
     <div className='main_container'>
@@ -8,9 +11,12 @@ function App() {
         <div className='main_box'>
           <Router>
             <Routes>
-              <Route path='/' Component={GetMarrige}>
+              <Route path='/' Component={MainPage}>
               </Route>
-              <Route path='/test' Component={GetMarrige}></Route>
+              <Route path='/randomPick' Component={GetMarrige}>
+              </Route>
+              <Route path='/worldCup' Component={WorldCup}></Route>
+              <Route path='/exList' Component={ExList}></Route>
             </Routes>
           </Router>
         </div>

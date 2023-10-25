@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Link } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from "recoil";
-import { ChampionData, maritalStatus, partnerImgValue, useSetMarriage, useSetPartnerImg, useSetPartnerState, userPatnerValue } from "./recoil/champion";
+import { ChampionData, maritalStatus, marriedPartnerStatus, partnerImgValue, useSetMarriage, useSetPartnerImg, useSetPartnerState, useSetmarriedPartner, userPatnerValue } from "./recoil/champion";
 
 const GetMarrige = (): JSX.Element => {
   // 결혼 상태
@@ -16,8 +16,11 @@ const GetMarrige = (): JSX.Element => {
   const userPartnerImg : ChampionData | any = useRecoilValue(partnerImgValue);
   // 파트너 이미지 갱신 함수
   const setPartnerImg = useSetPartnerImg();
-
+  // 결혼 파트너 데이터
+  const marriedPartnerData : ChampionData | any = useRecoilValue(marriedPartnerStatus);
+  const setmarriedPartnerData = useSetmarriedPartner();
   // 랜덤 챔피언 선택 함수
+  // const setMarriedPartner = useSetmarriedPartner();
   function getRandomChampion(championData: any | unknown) {
     const championsArray = Object.values(championData.data); // 챔피언 데이터 배열로 변환
     const randomChampion = championsArray[Math.floor(Math.random() * championsArray.length)];
@@ -26,7 +29,11 @@ const GetMarrige = (): JSX.Element => {
   
   // 결혼 함수
   function marryMe() {
-    setMarriage(true);
+  // 결혼한 배열에 데이터 할당
+  setmarriedPartnerData(userPartnerData);
+  console.log(marriedPartnerData);
+  // 결혼상태 true
+  setMarriage(true);
   };
 
   // 챔피언 이미지 찾기 함수

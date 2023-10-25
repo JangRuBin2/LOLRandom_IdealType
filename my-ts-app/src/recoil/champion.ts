@@ -17,14 +17,20 @@ export function useSetMarriage() {
   return useSetRecoilState(maritalStatus);
 }
 // 결혼한 상대의 정보
-export const marriedPartnerStatus = atom<ChampionData | null |unknown>({
-  key : 'marriedPartnerValue',
-  default : null
+export const marriedPartnerStatus = atom<ChampionData[] | null |unknown>({
+  key : 'marriedPartnerStatus',
+  default : []
 })
 // 결혼한 상대 정보 업데이트
 export function useSetmarriedPartner() {
-  return useSetRecoilState(marriedPartnerStatus);
+  const setMarriedPartner = useSetRecoilState(marriedPartnerStatus);
+
+  // 이 함수를 호출할 때 파트너 정보를 전달하도록 변경
+  return (partner: ChampionData) => {
+    setMarriedPartner((prevMarriedPartners: ChampionData[] | null | any) => [...prevMarriedPartners, partner]);
+  };
 }
+
 // 현재 파트너의 정보
 export const userPatnerValue = atom<ChampionData | null | unknown | any>({
   key: 'userPatnerValue',
@@ -42,13 +48,4 @@ export const partnerImgValue = atom<ChampionData | null |unknown>({
 // 이미지 정보 업데이트
 export function useSetPartnerImg() {
   return useSetRecoilState(partnerImgValue);
-}
-// 내가 거절한 챔피언 정보
-export const exPatnerValue = atom<ChampionData | any>({
-  key: 'exPatnerValue',
-  default: null,
-});
-// 내가 거절한 챔피언 정보 갱신 함수
-export function useSetexPatnerValue() {
-  return useSetRecoilState(exPatnerValue);
 }

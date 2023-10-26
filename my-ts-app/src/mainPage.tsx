@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 const content_btn_style : React.CSSProperties= {
   display : "flex", flexDirection : "row", justifyContent : "space-between", alignItems : "center", backgroundColor : '#D9D9D9', width : '300px', height : '130px'
 }
-// const btn_div_style : content_btn_style = {}
 const MainPage = () : JSX.Element => {
   return (<div style={content_btn_style}>
     <div>

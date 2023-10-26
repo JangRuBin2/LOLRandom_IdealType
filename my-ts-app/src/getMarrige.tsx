@@ -1,8 +1,8 @@
 import axios from "axios";
+import { useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from "recoil";
 import { ChampionData, maritalStatus, marriedPartnerStatus, partnerImgValue, useSetMarriage, useSetPartnerImg, useSetPartnerState, useSetmarriedPartner, userPatnerValue } from "./recoil/champion";
-
 const GetMarrige = (): JSX.Element => {
   // 결혼 상태
   const [isMarried, setMarried] = useRecoilState(maritalStatus);
@@ -31,11 +31,12 @@ const GetMarrige = (): JSX.Element => {
   function marryMe() {
   // 결혼한 배열에 데이터 할당
   setmarriedPartnerData(userPartnerData);
-  console.log(marriedPartnerData);
   // 결혼상태 true
   setMarriage(true);
   };
-
+  useEffect(()=> {
+    console.log(marriedPartnerData)
+  }, [marriedPartnerData]);
   // 챔피언 이미지 찾기 함수
   async function getPartnerImg(name : string) {
     try {
@@ -131,7 +132,11 @@ const GetMarrige = (): JSX.Element => {
           width="300"
           height="400"
         />
+        <div style={{
+          fontSize : '15px', width : '80%'
+        }}>
         <p>{userPartnerData.blurb}</p>
+        </div>
         </div>
         </>) : (<p>정보 불러오는중...</p>)}
         <div className="btn_box">

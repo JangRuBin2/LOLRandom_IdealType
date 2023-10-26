@@ -25,9 +25,16 @@ export const marriedPartnerStatus = atom<ChampionData[] | null |unknown>({
 export function useSetmarriedPartner() {
   const setMarriedPartner = useSetRecoilState(marriedPartnerStatus);
 
-  // 이 함수를 호출할 때 파트너 정보를 전달하도록 변경
   return (partner: ChampionData) => {
-    setMarriedPartner((prevMarriedPartners: ChampionData[] | null | any) => [...prevMarriedPartners, partner]);
+    setMarriedPartner((prevMarriedPartners: ChampionData[]) => {
+      // 중복 체크
+      if (!prevMarriedPartners.some((prevPartner) => prevPartner.id === partner.id)) {
+        // 중복되지 않으면 요소 추가
+        return [...prevMarriedPartners, partner];
+      }
+      // 이미 존재하는 경우 상태 변경 없음
+      return prevMarriedPartners;
+    });
   };
 }
 

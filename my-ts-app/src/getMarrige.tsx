@@ -104,7 +104,7 @@ const GetMarrige = (): JSX.Element => {
     return (<><p>{userPartnerData.name}와의 결혼을 축하합니다!</p>
     <div className="btn_box">
     <button onClick={divorce}>파혼</button>
-    <Link to='/test'>
+    <Link to='/exList'>
     <button>테스트</button>
     </Link>
     </div>

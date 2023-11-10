@@ -6,6 +6,7 @@ export interface ChampionData {
   key: string;
   name: string;
   title: string;
+  blurb : string;
 }
 // 결혼 상태
 export const maritalStatus = atom({

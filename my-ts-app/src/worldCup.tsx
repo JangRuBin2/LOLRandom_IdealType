@@ -25,7 +25,7 @@ const WorldCup = () : JSX.Element => {
         <option value='64'>64강</option>
       </select>
       <button onClick={worldCupStart}>선택</button>
-  </div>) : (<Test/>)}
+  </div>) : (<Test props={selectedValue}/>)}
   </>
   )
 }

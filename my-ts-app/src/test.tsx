@@ -1,51 +1,46 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { ChampionData } from './recoil/champion';
-type TestProps = {
-  props: string;
-};
-const Test : React.FC<TestProps> = ({props}) : JSX.Element => {
-  // async function getPartnerImg(name : string) {
-  //   try {
-  //     const response = await axios.get(`https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${name}_0.jpg`, { responseType: "blob" });
-  //     const reader = new FileReader();
-  //     reader.readAsDataURL(response.data);
-  //     reader.onload = () => {
-  //     // 이미지 데이터를 Base64로 변환하여 저장
-  //     // setPartnerImg(reader.result);
-  //     }}
-  //   catch (error) {
-  //     console.log('이미지 가져오기 실패', error);
-  //   }
-  // };
+const Test = () : JSX.Element => {
+  const { selectedValue } : any = useParams();
+  console.log(selectedValue);
   function getRandomChampion(championData: any | unknown) {
     const championsArray = Object.values(championData.data); // 챔피언 데이터 배열로 변환
     // props숫자로 변환
-    const numChampions = parseInt(props, 10);
+    const numChampions = parseInt(selectedValue, 10);
     // 이상형 월드컵 토너먼트 라운드만큼 데이터 추출
     const randomChampions = Array.from({ length: numChampions }, () => {
       return championsArray[Math.floor(Math.random() * championsArray.length)];
     });
     return randomChampions;
   };
+  // 챔피언 정보 가져오는 함수
+  useEffect(()=> {
+    // 함수를 한번 실행시키기 위한 변수
+    let isMounted = true;
+    // 챔피언 정보 가져오는 함수
     async function findPartner() {
       try {
         const response = await axios.get('https://ddragon.leagueoflegends.com/cdn/12.6.1/data/ko_KR/champion.json');
-        // API에서 받아온 챔피언 데이터
-        const allChampionData = response.data;
-        // 랜덤 챔피언 선택
-        const randomChampionData : ChampionData | any = getRandomChampion(allChampionData);
-        console.log(randomChampionData);
+        if (isMounted) {
+          const allChampionData = response.data;
+          const randomChampionData : ChampionData | any = getRandomChampion(allChampionData);
+          console.log('테스트');
+          console.log(randomChampionData);
+        }
       } catch (error) {
-        console.log('결혼 상대 매칭 실패', error);
+        console.log('챔피언 데이터 가져오기 실패', error);
       }
     }
-    useEffect(()=> {
-      findPartner();
-    }, []);
+    findPartner();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
   
   return (<>
-  <p>{props}</p>
+  <p>테스트 페이지</p>
   </>)
 }
 export default Test;

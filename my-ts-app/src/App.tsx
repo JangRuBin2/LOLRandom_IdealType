@@ -3,6 +3,7 @@ import './App.css';
 import ExList from './exList';
 import GetMarrige from './getMarrige';
 import MainPage from './mainPage';
+import Test from './test';
 import WorldCup from './worldCup';
 function App() {
   function goMain() {
@@ -21,6 +22,7 @@ function App() {
               </Route>
               <Route path='/worldCup' Component={WorldCup}></Route>
               <Route path='/exList' Component={ExList}></Route>
+              <Route path="/test/:selectedValue" Component={Test}></Route>
             </Routes>
           </Router>
         </div>

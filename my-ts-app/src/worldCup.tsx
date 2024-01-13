@@ -20,42 +20,30 @@ const WorldCup : React.FC<selectedRoundround>= ({round}) : JSX.Element => {
     const randomChampions = Array.from({ length: numChampions }, () => {
       return championsArray[Math.floor(Math.random() * championsArray.length)];
     });
+    console.log('randomChampions : ', randomChampions);
     return randomChampions;
   };
+   // 챔피언 정보 가져오는 함수
+  async function findPartner() {
+    try {
+      const response = await axios.get('https://ddragon.leagueoflegends.com/cdn/12.6.1/data/ko_KR/champion.json');
+        const allChampionData = response.data;
+        const randomChampionData : ChampionData | any = getRandomChampion(allChampionData);
+        setWorldCupMembes(randomChampionData);
+        console.log(randomChampionData);
+    } catch (error) {
+      console.log('챔피언 데이터 가져오기 실패', error);
+    }}
   // 챔피언 정보 가져오는 함수
   useEffect(()=> {
-    // 함수를 한번 실행시키기 위한 변수
-    let isMounted = true;
-    // 챔피언 정보 가져오는 함수
-    async function findPartner() {
-      try {
-        const response = await axios.get('https://ddragon.leagueoflegends.com/cdn/12.6.1/data/ko_KR/champion.json');
-        if (isMounted) {
-          const allChampionData = response.data;
-          const randomChampionData : ChampionData | any = getRandomChampion(allChampionData);
-          setWorldCupMembes(randomChampionData);
-          console.log(randomChampionData);
-        }
-      } catch (error) {
-        console.log('챔피언 데이터 가져오기 실패', error);
-      }
-    }
-    
     findPartner();
-    console.log(worldCupMembers, 'state에 저장된 월드컵 멤버');
-    return () => {
-      isMounted = false;
-    };
   }, [round]);
-  useEffect(()=> {
-    console.log(winMembers, ' 승리한 멤버');
-  }, [winMembers])
   // 둘 다 선택하기 싫을 때
   const chooseNone = () => {
     setCurrentMatch((prevMatch) => prevMatch + 1);
   };
   
-  const handleChampionSelect = (champion: ChampionData) => {
+  const championSelect = (champion: ChampionData) : void => {
     setWinMembers((prevSelectedChampions) => [...prevSelectedChampions, champion]);
     setCurrentMatch((prevMatch) => prevMatch + 1);
   };
@@ -65,21 +53,27 @@ const WorldCup : React.FC<selectedRoundround>= ({round}) : JSX.Element => {
     const matchups: JSX.Element[] = [];
 
     for (let i = currentMatch * 2; i < worldCupMembers.length && i < (currentMatch + 1) * 2; i += 2) {
+      console.log('currentMatch : ', i);
+      console.log('worldCupMembers.length : ', worldCupMembers.length);
       const champion1 = worldCupMembers[i];
       const champion2 = worldCupMembers[i + 1];
       matchups.push(
         <div key={`matchup-${i}`}>
-          <div onClick={() => handleChampionSelect(champion1)}>
+          <div onClick={() => championSelect(champion1)}>
           {imageArray[i] && <img src={imageArray[i]} alt="챔피언 이미지"/>}
           <h2>{champion1.id}</h2>
           </div>
           VS
-          <div onClick={() => handleChampionSelect(champion2)}>
+          <div onClick={() => championSelect(champion2)}>
           {imageArray[i+1] && <img src={imageArray[i+1]} alt="챔피언 이미지" />}
           <h2>{champion2.id}</h2>
           </div>
         </div>
       );
+    }
+    if (currentMatch * 2 >= worldCupMembers.length) {
+      // 다른 페이지로 이동하는 함수 호출 또는 다른 로직을 추가하세요.
+      console.log('경기 끝');
     }
     return matchups;
   };

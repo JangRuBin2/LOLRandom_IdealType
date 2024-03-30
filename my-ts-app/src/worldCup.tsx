@@ -14,6 +14,8 @@ const WorldCup: React.FC<selectedRoundround> = ({ round }): JSX.Element => {
   const [currentMatch, setCurrentMatch] = useState<number>(0);
   // 이미지 정보 저장
   const [imageArray, setImageArray] = useState<(string | undefined)[]>([]);
+  //현재 라운드
+  const [matchRound, setMatchRound] = useState<any>(round + "강");
   function getRandomChampion(championData: any | unknown) {
     const championsArray = Object.values(championData.data); // 챔피언 데이터 배열로 변환
     // round숫자로 변환
@@ -66,31 +68,35 @@ const WorldCup: React.FC<selectedRoundround> = ({ round }): JSX.Element => {
       matchups.push(
         <div key={`matchup-${i}`}>
           <div onClick={() => championSelect(champion1)}>
-            {imageArray[i] && <img src={imageArray[i]} alt="챔피언 이미지" />}
+            {imageArray[i] && <img style={{width : "200px", height:"200px"}} src={imageArray[i]} alt="챔피언 이미지" />}
             <h2>{champion1.id}</h2>
           </div>
           VS
           <div onClick={() => championSelect(champion2)}>
-            {imageArray[i + 1] && <img src={imageArray[i + 1]} alt="챔피언 이미지" />}
+            {imageArray[i + 1] && <img style={{width : "200px", height:"200px"}} src={imageArray[i + 1]} alt="챔피언 이미지" />}
             <h2>{champion2.id}</h2>
           </div>
         </div>
       );
     }
-    console.log('winMembers.length : ', winMembers.length);
-    console.log('currentMatch : ', currentMatch);
-    console.log('worldCupMembers.length : ', worldCupMembers.length);
     if (currentMatch * 2 === worldCupMembers.length) {
       console.log('경기 끝?')
       // 다른 페이지로 이동하는 함수 호출 또는 다른 로직을 추가하세요.
       if (winMembers.length === parseInt(round, 10) / 2) {
         setWorldCupMembers(winMembers);
         console.log('정상 실행됨?');
-      //   setWinMembers([]);
-      //   setCurrentMatch(0);
-      // } else {
-      //   console.log('토너먼트 종료');
-      //   // 토너먼트가 완전히 종료된 경우, 여기에 추가 로직을 넣을 수 있습니다.
+        setWinMembers([]);
+        setCurrentMatch(0);
+        if(matchRound >= 5) {
+          setMatchRound((preventRound : number)=> (preventRound / 2) + "강");
+        } else {
+          setMatchRound("결승전");
+        }
+      } else {
+        console.log(imageArray, "챔피언 이미지");
+        console.log('토너먼트 종료', winMembers[0]);
+        return test();
+        // 토너먼트가 완전히 종료된 경우, 여기에 추가 로직을 넣을 수 있습니다.
       }
       console.log('경기 끝');
     }
@@ -125,14 +131,16 @@ const WorldCup: React.FC<selectedRoundround> = ({ round }): JSX.Element => {
 
     fetchImages();
   }, [worldCupMembers]);
-
+  const test =() : JSX.Element => {
+    return (<div>
+      {/* {winMembers[0]['name']} */}
+    </div>)
+  }
   return (
     <>
-      <h2>{round}강</h2>
-      {
-        
-      }
+      <h2>{matchRound}</h2>
       {renderMatchups()}
+      
       {currentMatch < worldCupMembers.length / 2 && (
         <button onClick={chooseNone}>기권</button>
       )}
